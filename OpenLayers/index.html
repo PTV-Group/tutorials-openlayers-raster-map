@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <title>PTV Raster Map OpenLayers Tutorial</title>
+    <link rel="stylesheet" href="https://unpkg.com/openlayers@4.6.5/dist/ol.css"/>
+    <style>
+        body,
+        html {
+            border: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript" src="https://unpkg.com/openlayers@4.6.5/dist/ol.js"></script>
+
+<script type="text/javascript" src="./headerTileLayer.js"></script>
+<script type="text/javascript">
+  const api_key = "YOUR_API_KEY";
+  const tileURL = "https://api.myptv.com/rastermaps/v1/image-tiles/{z}/{x}/{y}?apiKey=" + api_key;
+
+  // Karlsruhe
+  const view = new ol.View({
+    center: ol.proj.fromLonLat([8.4, 49]),
+    zoom: 13
+  });
+
+  const ptvTileLayer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: tileURL,
+      layer: "ptv-raster",
+      maxZoom: 22,
+      attributions: "&copy;2022, PTV Group, HERE"
+    })
+  });
+
+  const map = new ol.Map({
+    target: "map",
+    layers: [ptvTileLayer],
+    view
+  });
+</script>
+</body>
+
+</html>
